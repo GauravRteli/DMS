@@ -17,8 +17,8 @@ const ManageRecruitment = () => {
   return (
     <div>
         {
-            recruitment?.map(({jobname,description,requirements,time,noofworkers,limitedtime,data,_id},index) => {
-                return <JobCard key={_id} heading={jobname} description={description} requirements={requirements} time={time} />
+            recruitment?.map(({jobname,description,requirements,time,noofworkers,limitedtime,date,_id},index) => {
+                return <JobCard getData={getData} key={_id} id={_id} jobname={jobname} description={description} requirements={requirements} time={time} noofworkers={noofworkers} limitedtime={limitedtime} date={date} />
             })
         }
         

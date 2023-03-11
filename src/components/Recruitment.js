@@ -13,7 +13,6 @@ function Recruitment() {
   const [successfull,setSuccessfull] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let flag = false;
     if(limitedtime && date){
       let day,month,year;
       year = date.substring(0,4);
@@ -23,7 +22,7 @@ function Recruitment() {
       console.log(year + " " + month + " " + day);
     }
 
-    if(!jobName || !noofworkers || !requirements || !description || (limitedtime == true && !date) || !otp){
+    if(!jobName || !noofworkers || !requirements || !description || (limitedtime === true && !date) || !otp){
       document.getElementById("message").innerText = "Some fields are empty";
     }else if(!(await bcrypt.compare(otp,sessionStorage.getItem('SECRET_CODE')))){
       document.getElementById('message').innerHTML = "Incorrect OTP";
@@ -58,7 +57,7 @@ function Recruitment() {
   };
 
   const handleInput = (value,id) => {
-    if(value == ""){
+    if(value === ""){
         document.getElementById(id).style.backgroundColor = "rgba(255, 2, 2, 0.1)";
         document.getElementById(id).style.border = "1px solid red";
     }

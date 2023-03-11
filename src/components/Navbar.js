@@ -5,7 +5,7 @@ function Navbar() {
   const [active,setActive] = useState("Dashboard");
   return (
     <>
-      <div class="grid grid-flow-row-dense grid-cols-6">
+      <div className="grid grid-flow-row-dense grid-cols-6">
         <nav className="row-span-3 flex flex-col col-span-1 bg-gray-800 h-screen text-white float-left">
           <div>
             <div className="px-3 py-3 flex items-center justify-between">

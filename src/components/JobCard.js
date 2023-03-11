@@ -1,22 +1,25 @@
 import React,{ useState } from "react";
 import { HiPencilAlt,HiXCircle } from "react-icons/hi";
+import DeletePopForm from "./DeletePopForm";
 import PopupForm from "./PopupForm";
 
 
-const JobCard = ({ heading, description, requirements, time }) => {
+const JobCard = ({ jobname,description,requirements,time,noofworkers,limitedtime,date, id,getData}) => {
   const recruitmentTime = new Date(time);
     const [open, setOpen] = useState(false);
+    const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
     const handleDelete = () => {
-
+      setOpenDeletePopUp(true);
     }
     const handleEdit = () => {
-
+      setOpen(true);
     }
 
   return (
+    <>
     <div className="bg-white rounded-md shadow-md p-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold mb-2">{heading}</h2>
+        <h2 className="text-2xl font-bold mb-2">{jobname}</h2>
         <p className="text-gray-700 font-bold">
           {recruitmentTime.toUTCString()}
         </p>
@@ -38,6 +41,9 @@ const JobCard = ({ heading, description, requirements, time }) => {
         </button>
       </div>
     </div>
+    {(openDeletePopUp && !open)? <DeletePopForm setOpenDeletePopUp={setOpenDeletePopUp} id={id} getData={getData} jobname={jobname} />:<></>}
+    {(open && !openDeletePopUp)?<PopupForm getData={getData} key={id} id={id} setOpen={setOpen} job={jobname} jobdescription={description} jobrequirements={requirements} jobtime={time} jobnoofworkers={noofworkers} joblimitedtime={limitedtime} jobdate={date} />:<></>}
+    </>
   );
 };
 
