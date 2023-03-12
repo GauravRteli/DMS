@@ -17,7 +17,7 @@ const JobCard = ({ jobname,description,requirements,time,noofworkers,limitedtime
 
   return (
     <>
-    <div className="bg-white rounded-md shadow-md p-6">
+    <div className="bg-white rounded-md mb-4 shadow-md p-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold mb-2">{jobname}</h2>
         <p className="text-gray-700 font-bold">

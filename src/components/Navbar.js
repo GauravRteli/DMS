@@ -1,8 +1,13 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, useNavigate, Outlet } from "react-router-dom";
 
 function Navbar() {
   const [active,setActive] = useState("Dashboard");
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    navigate('/');
+  }
+
   return (
     <>
       <div className="grid grid-flow-row-dense grid-cols-6">
@@ -38,7 +43,7 @@ function Navbar() {
               </Link>
             </div>
           </div>
-          <button className="mt-auto bg-slate-100 py-3 rounded w-full text-slate-800 font-bold hover:bg-slate-300">Log Out</button>
+          <button className="mt-auto bg-slate-100 py-3 rounded w-full text-slate-800 font-bold hover:bg-slate-300" onClick={handleLogOut}>Log Out</button>
         </nav>
         <div className="row-span-3 col-span-5 p-5">
           <Outlet />

@@ -41,15 +41,6 @@ const PopupForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      jobname,
-      date,
-      description,
-      limitedtime,
-      noofworkers,
-      requirements,
-      id,
-    });
     await axios.post("/update-recruitment", {
       jobname,
       date,
