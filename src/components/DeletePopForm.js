@@ -13,7 +13,7 @@ const DeletePopForm = ({ setOpenDeletePopUp,jobname,id,getData }) => {
     }
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 flex flex-column items-center justify-center">
       <div className="absolute inset-10 bg-gray-800 opacity-75"></div>
       <div className="bg-white rounded-lg z-20 lg:w-1/3 w-2/3 p-8">
         <div className="flex justify-between items-center">
@@ -26,7 +26,7 @@ const DeletePopForm = ({ setOpenDeletePopUp,jobname,id,getData }) => {
         <h1 className="text-2xl font-bold underline italic text-center">{jobname}</h1>
         <p className="font-bold text-center">Are you sure you want to delete the Recruitment ?</p>
         <button onClick={handleDelete} className="bg-red-500 font-bold text-white rounded-md px-4 py-2 hover:bg-white hover:text-red-500 hover:border hover:border-red-500 transition-colors duration-300 ease-in-out">
-          <div className="flex items-center gap-1 justify-between">
+          <div className="flex items-center gap-1">
             <HiXCircle /> Delete
           </div>
         </button>

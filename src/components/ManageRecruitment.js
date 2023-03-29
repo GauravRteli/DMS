@@ -7,6 +7,7 @@ const ManageRecruitment = () => {
     const getData = async() => {
         const data = await axios.get('/get-recruitments');
         setRecruitment(data.data);
+        console.log(data);
     }
     useEffect(() => {
         
@@ -17,8 +18,8 @@ const ManageRecruitment = () => {
   return (
     <div>
         {
-            recruitment?.map(({jobname,description,requirements,time,noofworkers,limitedtime,date,_id},index) => {
-                return <JobCard getData={getData} key={_id} id={_id} jobname={jobname} description={description} requirements={requirements} time={time} noofworkers={noofworkers} limitedtime={limitedtime} date={date} />
+            recruitment?.map(({jobname,description,requirements,time,noofworkers,limitedtime,date,_id,workerAge,shift,sex,createdAt},index) => {
+                return <JobCard getData={getData} key={_id} id={_id} jobname={jobname} description={description} createdAt={createdAt} workerAge={workerAge} shift={shift} sex={sex} requirements={requirements} time={time} noofworkers={noofworkers} limitedtime={limitedtime} date={date} />
             })
         }
         

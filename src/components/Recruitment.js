@@ -11,6 +11,9 @@ function Recruitment() {
   const [date, setDate] = useState("");
   const [otp, setOtp] = useState("");
   const [successfull,setSuccessfull] = useState(false);
+  const [sex, setSex] = useState("Male");
+  const [shift, setShift] = useState("Day");
+  const [workerAge, setWorkerAge] = useState(14);
   const handleSubmit = async (event) => {
     event.preventDefault();
     if(limitedtime && date){
@@ -22,13 +25,13 @@ function Recruitment() {
       console.log(year + " " + month + " " + day);
     }
 
-    if(!jobName || !noofworkers || !requirements || !description || (limitedtime === true && !date) || !otp){
+    if(!jobName || !noofworkers || !requirements || !description || (limitedtime === true && !date) || !otp || !workerAge){
       document.getElementById("message").innerText = "Some fields are empty";
     }else if(!(await bcrypt.compare(otp,sessionStorage.getItem('SECRET_CODE')))){
       document.getElementById('message').innerHTML = "Incorrect OTP";
     }else{
       const data = await axios.post("/add-recruitment",{
-        jobName,noofworkers,requirements,description,limitedtime,date
+        jobName,noofworkers,requirements,description,limitedtime,date,workerAge,shift,sex
       });
       if(data.status === 200)
         setSuccessfull(true);
@@ -43,6 +46,9 @@ function Recruitment() {
     setRequirements("");
     setNoofworkers(0);
     setOtp("");
+    setWorkerAge(0);
+    setShift("Day");
+    setSex("Male");
     sessionStorage.removeItem("SECRET_CODE");
     setLimitedtime(false);
     setSuccessfull(false);
@@ -72,6 +78,10 @@ function Recruitment() {
     if (e.target.value === "YES") setLimitedtime(true);
     else setLimitedtime(false);
   };
+  const handleSex = (e) => {
+    setSex(e.target.value);
+  }
+
   return (
     (!successfull)?<div>
         <h1 className="font-bold text-5xl mb-5 text-center">Recruitment</h1>
@@ -96,17 +106,71 @@ function Recruitment() {
               className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-slate-400 focus:shadow focus:shadow-outline"
             />
           </div>
+          
           <div className="mb-4">
             <label
-              htmlFor="jobName"
+              htmlFor="description"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Sex of Worker *
+            </label>
+            <input
+              checked={(sex === "Male")}
+              id="Sex"
+              name="Sex"
+              type="radio"
+              value="Male"
+              onChange={handleSex}
+            />
+            <label
+              htmlFor="description"
+              className="text-gray-700 font-bold ml-3 text-center"
+            >
+              Male
+            </label>
+            <input
+              checked={(sex === "Female")}
+              id="Sex"
+              name="Sex"
+              type="radio"
+              value="Female"
+              onChange={handleSex}
+              className="ml-3"
+            />
+            <label
+              htmlFor="description"
+              className="text-gray-700 font-bold ml-3 text-center"
+            >
+              Female
+            </label>
+            <input
+              checked={(sex === "Both")}
+              id="Sex"
+              name="Sex"
+              type="radio"
+              value="Both"
+              onChange={handleSex}
+              className="ml-3"
+            />
+            <label
+              htmlFor="description"
+              className="text-gray-700 font-bold ml-3 text-center"
+            >
+              Both
+            </label>
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="noofworkers"
               className="block text-gray-700 font-bold mb-2"
             >
               No of Worker Required *
             </label>
             <input
               type="number"
-              id="jobName"
-              name="jobName"
+              id="noofworkers"
+              name="noofworkers"
               value={noofworkers}
               onChange={(event) => {
                 handleInput(event.target.value,event.target.id)
@@ -115,6 +179,80 @@ function Recruitment() {
               placeholder="No Of Workers Required"
               className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
             />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="workerAge"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Minimum age of worker *
+            </label>
+            <input
+              type="number"
+              id="workerAge"
+              name="workerAge"
+              value={workerAge}
+              onChange={(event) => {
+                handleInput(event.target.value,event.target.id)
+                setWorkerAge(event.target.value)
+              }}
+              placeholder="Minimum age of worker"
+              className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Working Time *
+            </label>
+            <input
+              checked={(shift === "Day")}
+              id="shift1"
+              name="shift"
+              type="radio"
+              value="Day"
+              onChange={(e) => setShift(e.target.value)}
+            />
+            <label
+              htmlFor="description"
+              className="text-gray-700 font-bold ml-3 text-center"
+            >
+              Day Shift
+            </label>
+            <input
+              checked={(shift === "Night")}
+              id="shift2"
+              name="shift"
+              type="radio"
+              value="Night"
+              onChange={(e) => setShift(e.target.value)}
+              className="ml-3"
+            />
+            <label
+              htmlFor="description"
+              className="text-gray-700 font-bold ml-3 text-center"
+            >
+              Night Shift
+            </label>
+            <input
+              checked={(shift === "Both")}
+              id="shift3"
+              name="shift"
+              type="radio"
+              value="Both"
+              onChange={(e) => setShift(e.target.value)}
+              className="ml-3"
+            />
+            <label
+              htmlFor="description"
+              className="text-gray-700 font-bold ml-3 text-center"
+            >
+              Any
+            </label>
           </div>
           <div className="mb-4">
             <label
@@ -158,12 +296,12 @@ function Recruitment() {
           <div className="mb-4">
             <label
               htmlFor="description"
-              className="block text-gray-700 font-bold"
+              className="block text-gray-700 font-bold mb-2"
             >
               Is it Limited Time Recruitment *
             </label>
-            <br />
             <input
+              checked={limitedtime}
               id="limitedtime"
               name="limitedtime"
               type="radio"
@@ -177,6 +315,7 @@ function Recruitment() {
               YES
             </label>
             <input
+            checked={!limitedtime}
               id="limitedtime"
               name="limitedtime"
               type="radio"
