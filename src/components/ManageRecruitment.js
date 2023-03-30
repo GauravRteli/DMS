@@ -18,8 +18,8 @@ const ManageRecruitment = () => {
   return (
     <div>
         {
-            recruitment?.map(({jobname,description,requirements,time,noofworkers,limitedtime,date,_id,workerAge,shift,sex,createdAt},index) => {
-                return <JobCard getData={getData} key={_id} id={_id} jobname={jobname} description={description} createdAt={createdAt} workerAge={workerAge} shift={shift} sex={sex} requirements={requirements} time={time} noofworkers={noofworkers} limitedtime={limitedtime} date={date} />
+            recruitment?.map(({jobname,description,requirements,time,noofworkers,limitedtime,salary,date,_id,workerAge,shift,sex,createdAt},index) => {
+                return <JobCard getData={getData} key={_id} id={_id} jobname={jobname} salary={salary} description={description} createdAt={createdAt} workerAge={workerAge} shift={shift} sex={sex} requirements={requirements} time={time} noofworkers={noofworkers} limitedtime={limitedtime} date={date} />
             })
         }
         

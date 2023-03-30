@@ -13,6 +13,7 @@ function Recruitment() {
   const [successfull,setSuccessfull] = useState(false);
   const [sex, setSex] = useState("Male");
   const [shift, setShift] = useState("Day");
+  const [salary, setSalary] = useState(0);
   const [workerAge, setWorkerAge] = useState(14);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,13 +26,13 @@ function Recruitment() {
       console.log(year + " " + month + " " + day);
     }
 
-    if(!jobName || !noofworkers || !requirements || !description || (limitedtime === true && !date) || !otp || !workerAge){
+    if(!jobName || !noofworkers || !requirements || !description || (limitedtime === true && !date) || !otp || !workerAge || !salary){
       document.getElementById("message").innerText = "Some fields are empty";
     }else if(!(await bcrypt.compare(otp,sessionStorage.getItem('SECRET_CODE')))){
       document.getElementById('message').innerHTML = "Incorrect OTP";
     }else{
       const data = await axios.post("/add-recruitment",{
-        jobName,noofworkers,requirements,description,limitedtime,date,workerAge,shift,sex
+        jobName,noofworkers,requirements,description,limitedtime,date,workerAge,shift,sex,salary
       });
       if(data.status === 200)
         setSuccessfull(true);
@@ -46,6 +47,7 @@ function Recruitment() {
     setRequirements("");
     setNoofworkers(0);
     setOtp("");
+    setSalary(0);
     setWorkerAge(0);
     setShift("Day");
     setSex("Male");
@@ -254,6 +256,28 @@ function Recruitment() {
               Any
             </label>
           </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="salary"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Salary *
+            </label>
+            <input
+              type="number"
+              id="salary"
+              name="salary"
+              value={salary}
+              onChange={(event) => {
+                handleInput(event.target.value,event.target.id);
+                setSalary(event.target.value)
+              }}
+              placeholder="Salary ..."
+              className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
           <div className="mb-4">
             <label
               htmlFor="requirements"

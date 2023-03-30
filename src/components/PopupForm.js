@@ -7,6 +7,7 @@ const PopupForm = ({
   job,
   jobdescription,
   jobtime,
+  jobsalary,
   jobrequirements,
   jobnoofworkers,
   joblimitedtime,
@@ -19,6 +20,7 @@ const PopupForm = ({
   getData,
 }) => {
   const [jobname, setJobname] = useState(job);
+  const [salary, setSalary] = useState(jobsalary);
   const [noofworkers, setNoofworkers] = useState(jobnoofworkers);
   const [requirements, setRequirements] = useState(jobrequirements);
   const [description, setDescription] = useState(jobdescription);
@@ -47,9 +49,18 @@ const PopupForm = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!jobname || !noofworkers || !requirements || !description || (limitedtime === true && !date) || !workerAge){
-      document.getElementById("update-error").innerText = "Some fields are empty";
-    }else{
+    if (
+      !jobname ||
+      !noofworkers ||
+      !requirements ||
+      !description ||
+      (limitedtime === true && !date) ||
+      !workerAge ||
+      !salary
+    ) {
+      document.getElementById("update-error").innerText =
+        "Some fields are empty";
+    } else {
       await axios.post("/update-recruitment", {
         jobname,
         date,
@@ -58,6 +69,7 @@ const PopupForm = ({
         noofworkers,
         requirements,
         sex,
+        salary,
         shift,
         workerAge,
         id,
@@ -99,47 +111,50 @@ const PopupForm = ({
               className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-slate-400 focus:shadow focus:shadow-outline"
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="jobName"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              No of Worker Required *
-            </label>
-            <input
-              type="number"
-              id="jobName"
-              name="jobName"
-              value={noofworkers}
-              onChange={(event) => {
-                handleInput(event.target.value, event.target.id);
-                setNoofworkers(event.target.value);
-              }}
-              placeholder="No Of Workers Required"
-              className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
-            />
+          {/*  */}
+          <div className="flex justify-between">
+            <div className="mb-4">
+              <label
+                htmlFor="jobName"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                No of Worker Required *
+              </label>
+              <input
+                type="number"
+                id="jobName"
+                name="jobName"
+                value={noofworkers}
+                onChange={(event) => {
+                  handleInput(event.target.value, event.target.id);
+                  setNoofworkers(event.target.value);
+                }}
+                placeholder="No Of Workers Required"
+                className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="workerAge"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Minimum Worker Age *
+              </label>
+              <input
+                type="number"
+                id="workerAge"
+                name="workerAge"
+                value={workerAge}
+                onChange={(event) => {
+                  handleInput(event.target.value, event.target.id);
+                  setWorkerAge(event.target.value);
+                }}
+                placeholder="No Of Workers Required"
+                className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="workerAge"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Minimum Worker Age *
-            </label>
-            <input
-              type="number"
-              id="workerAge"
-              name="workerAge"
-              value={workerAge}
-              onChange={(event) => {
-                handleInput(event.target.value, event.target.id);
-                setWorkerAge(event.target.value);
-              }}
-              placeholder="No Of Workers Required"
-              className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-
+          {/*  */}
           <div className="mb-4">
             <label
               htmlFor="description"
@@ -148,7 +163,7 @@ const PopupForm = ({
               Sex of Worker *
             </label>
             <input
-              checked={(sex === "Male")}
+              checked={sex === "Male"}
               id="Sex"
               name="Sex"
               type="radio"
@@ -162,7 +177,7 @@ const PopupForm = ({
               Male
             </label>
             <input
-              checked={(sex === "Female")}
+              checked={sex === "Female"}
               id="Sex"
               name="Sex"
               type="radio"
@@ -177,7 +192,7 @@ const PopupForm = ({
               Female
             </label>
             <input
-              checked={(sex === "Both")}
+              checked={sex === "Both"}
               id="Sex"
               name="Sex"
               type="radio"
@@ -192,7 +207,7 @@ const PopupForm = ({
               Both
             </label>
           </div>
-          
+
           <div className="mb-4">
             <label
               htmlFor="description"
@@ -201,7 +216,7 @@ const PopupForm = ({
               Working Time *
             </label>
             <input
-              checked={(shift === "Day")}
+              checked={shift === "Day"}
               id="shift1"
               name="shift"
               type="radio"
@@ -215,7 +230,7 @@ const PopupForm = ({
               Day Shift
             </label>
             <input
-              checked={(shift === "Night")}
+              checked={shift === "Night"}
               id="shift2"
               name="shift"
               type="radio"
@@ -230,7 +245,7 @@ const PopupForm = ({
               Night Shift
             </label>
             <input
-              checked={(shift === "Both")}
+              checked={shift === "Both"}
               id="shift3"
               name="shift"
               type="radio"
@@ -246,6 +261,26 @@ const PopupForm = ({
             </label>
           </div>
 
+          <div className="mb-4">
+            <label
+              htmlFor="salary"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Salary
+            </label>
+            <input
+              type="number"
+              id="salary"
+              name="salary"
+              value={salary}
+              onChange={(event) => {
+                handleInput(event.target.value, event.target.id);
+                setSalary(event.target.value);
+              }}
+              placeholder="Salary"
+              className="border rounded w-full py-2 px-3 text-gray-700 focus:border-slate-400 focus:shadow leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
 
           <div className="mb-4">
             <label
@@ -344,7 +379,10 @@ const PopupForm = ({
           ) : (
             <></>
           )}
-          <span className="font-bold text-red-500 block" id="update-error"></span>
+          <span
+            className="font-bold text-red-500 block"
+            id="update-error"
+          ></span>
           <div className="flex items-center justify-between mt-4">
             <button
               onClick={handleSubmit}

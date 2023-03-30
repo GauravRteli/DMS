@@ -13,6 +13,7 @@ const JobCard = ({
   sex,
   noofworkers,
   limitedtime,
+  salary,
   date,
   id,
   createdAt,
@@ -37,7 +38,7 @@ const JobCard = ({
             {recruitmentTime.toUTCString()}
           </p>
         </div>
-        <label className="text-grey-700 font-bold">Description</label>
+        <label className="text-grey-700 font-bold">Description {salary}</label>
         <p className="text-gray-700 mb-4 ml-4">{description}</p>
         <label className="text-grey-700 font-bold">Requirements</label>
         <ul className="list-disc list-inside mb-4 ml-4">{requirements}</ul>
@@ -77,6 +78,7 @@ const JobCard = ({
           id={id}
           setOpen={setOpen}
           job={jobname}
+          jobsalary={salary}
           jobdescription={description}
           jobrequirements={requirements}
           jobtime={time}
