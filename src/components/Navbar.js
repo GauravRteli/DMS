@@ -41,6 +41,13 @@ function Navbar() {
               >
                 Manage-Recruitments
               </Link>
+              <Link
+                to='../jobdetails'
+                onClick={() => setActive("jobdetails")}
+                className={`text-gray-300 hover:bg-gray-700 hover:text-white block hidden px-3 py-2 rounded-md text-base font-medium ${(active === "jobdetails")? "bg-gray-700": ""}`}
+              >
+                Jobdetails
+              </Link>
             </div>
           </div>
           <button className="mt-auto bg-slate-100 py-3 rounded w-full text-slate-800 font-bold hover:bg-slate-300" onClick={handleLogOut}>Log Out</button>

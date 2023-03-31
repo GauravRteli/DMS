@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { HiPencilAlt, HiXCircle } from "react-icons/hi";
 import { FaRegEye } from "react-icons/fa";
@@ -47,13 +48,19 @@ const JobCard = ({
         <label className="text-grey-700 font-bold">Requirements</label>
         <ul className="list-disc list-inside mb-4 ml-4">{requirements}</ul>
         <div className="flex gap-2 w-full">
-          <button className="bg-green-600 font-bold text-white rounded-md px-4 py-2 hover:bg-white hover:text-green-500 hover:border hover:border-green-500 transition-colors duration-300 ease-in-out"
-                  onClick={() => setOpenViewPopUp(true)}
+          <Link
+            to='../jobdetails'
           >
-            <div className="flex items-center gap-1 justify-between">
-              <FaRegEye /> View
-            </div>
-          </button>
+            <button
+              className="bg-green-600 font-bold text-white rounded-md px-4 py-2 hover:bg-white hover:text-green-500 hover:border hover:border-green-500 transition-colors duration-300 ease-in-out"
+              onClick={() => sessionStorage.setItem("job_id",id)}
+            >
+              <div className="flex items-center gap-1 justify-between">
+                <FaRegEye /> View
+              </div>
+            </button>
+          </Link>
+
           <button
             onClick={handleEdit}
             className="bg-blue-500 font-bold text-white rounded-md px-4 py-2 hover:bg-white hover:text-blue-500 hover:border hover:border-blue-500 transition-colors duration-300 ease-in-out"

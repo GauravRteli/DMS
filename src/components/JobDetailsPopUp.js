@@ -1,63 +1,159 @@
-import React from "react";
-import { HiX } from "react-icons/hi";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import WorkerCard from "./WorkerCard";
 
-const JobDetails = ({ setOpenViewPopUp }) => {
+const JobDetails = () => {
+  const [jobData, setJobData] = useState(null);
+  const [workers, setWorkers] = useState([]);
+  const [selectedWorkerDetail, setSelectedWorkerDetail] = useState(null);
+  const getJobData = async () => {
+    const id = sessionStorage.getItem("job_id");
+    const data = await axios.post("/get-job", {
+      job_id: id,
+    });
+    console.log(data);
+    setJobData(data?.data);
+    setWorkers(data?.data?.workerregistered);
+  };
+  useEffect(() => {
+    getJobData();
+  }, []);
+  useEffect(() => {
+    console.log(selectedWorkerDetail);
+  }, [selectedWorkerDetail]);
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center overflow-y-scroll">
-      <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
-      <div className="bg-white rounded-lg z-20 w-11/12 p-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold mb-4 italic">View</h2>
-          <HiX
-            className="text-2xl text-slate-800 font-bold hover:text-slate-500"
-            onClick={() => setOpenViewPopUp(false)}
-          />
+    <div className="h-screen">
+      <div className="bg-slate-50 p-4 m-2 shadow rounded-lg">
+        <div className="grid grid-cols-3 m-2 gap-2">
+          <div className="col-span-1">
+            <p className="font-semibold">
+              <span className="font-bold underline">
+                Job title:&nbsp;&nbsp;
+              </span>
+              {jobData?.jobname}
+            </p>
+            <p className="font-semibold">
+              <span className="font-bold underline">Salary:</span>&nbsp;&nbsp;
+              {jobData?.salary} per month
+            </p>
+            <p className="font-semibold">
+              <span className="font-bold underline">Shift:</span>&nbsp;&nbsp;
+              {jobData?.shift}
+            </p>
+            <p className="font-semibold">
+              <span className="font-bold underline">No Of Workers:</span>
+              &nbsp;&nbsp;{jobData?.noofworkers}
+            </p>
+            <p className="font-semibold">
+              <span className="font-bold underline">Worker`s Age</span>
+              &nbsp;&nbsp;{jobData?.workerAge}+
+            </p>
+            {jobData?.limitedtime ? (
+              <p className="font-semibold">
+                <span className="font-bold underline">
+                  Recruitment Valid Upto:
+                </span>
+                &nbsp;&nbsp;{new Date(jobData?.date).toUTCString()}
+              </p>
+            ) : (
+              <p className="font-bold">Not a Limited time Recruitment</p>
+            )}
+            <p className="font-semibold">
+              <span className="font-bold underline">Gender:</span>&nbsp;&nbsp;
+              {jobData?.sex === "Both" ? "Both Female and Male " : ""} Workers
+              are allowed
+            </p>
+            <p className="font-semibold">
+              <span className="font-bold underline">
+                Recruitment Started At:
+              </span>
+              &nbsp;&nbsp;{new Date(jobData?.createdAt).toUTCString()}
+            </p>
+          </div>
+          <div className="col-span-2">
+            <label className="font-bold">Requirements :</label>
+            <p className="font-semibold bg-slate-200 mb-2 rounded-lg p-2">
+              {jobData?.requirements}
+            </p>
+            <label className="font-bold">Description :</label>
+            <p className="font-semibold bg-slate-200 rounded-lg p-2">
+              {jobData?.description}
+            </p>
+          </div>
         </div>
-        <div style={{ maxHeight: "750px", overflowY: "scroll",minWidth:"100%" }}>
-          <div className="border p-4 rounded-lg">
-            <h2 className="text-xl font-bold">jobname</h2>
-            <p className="my-2">jobinfo</p>
-            <h3 className="text-lg font-semibold">Workers:</h3>
-            <ul className="list-disc ml-6">
-              <li key="1" className="flex justify-between items-center my-2">
-                <p>Worker Name 1</p>
-                <div className="flex space-x-2">
-                  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Accept
-                  </button>
-                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                    Reject
-                  </button>
-                </div>
-              </li>
-              <li key="2" className="flex justify-between items-center my-2">
-                <p>Worker Name 1</p>
-                <div className="flex space-x-2">
-                  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Accept
-                  </button>
-                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                    Reject
-                  </button>
-                </div>
-              </li>
-            </ul>
-            <div className="my-4">
-              <h3 className="text-lg font-semibold">Accepted Workers:</h3>
-              <ul className="list-disc ml-6">
-                <li>Worker 1</li>
-                <li>Worker 2</li>
-                <li>Worker 3</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">Rejected Workers:</h3>
-              <ul className="list-disc ml-6">
-                <li>worker 1</li>
-                <li>worker 2</li>
-                <li>worker 3</li>
-              </ul>
-            </div>
+      </div>
+      <div className="grid grid-cols-3 m-2 gap-2">
+        <div
+          className="bg-slate-50 p-4 col-span-2 overflow-scroll shadow rounded-lg"
+          style={{ height: "55%" }}
+        >
+          <h2 className="text-xl font-bold mb-1">Workers</h2>
+          <hr className="mb-2 border-slate-500" />
+          {workers &&
+            workers.map((worker, index) => {
+              return (
+                <WorkerCard
+                  key={index}
+                  index={index}
+                  workers={workers}
+                  setSelectedWorkerDetail={setSelectedWorkerDetail}
+                  name={worker.name}
+                  phoneNo={worker.phoneNo}
+                />
+              );
+            })}
+        </div>
+        <div className="bg-slate-50 p-4 col-span-1 h-96 shadow rounded-lg">
+          {/* 
+                                      dateOfBirth
+                            : 
+                            "2003-05-23T20:50:22.230Z"
+                            email
+                            : 
+                            "gauravteli134@gmail.com"
+                            name
+                            : 
+                            "Teli Gaurav Ratanlal "
+                            password
+                            : 
+                            "$2a$10$u47lOFMEsM7Lcdymx6KH4OMPDE8UocetqsQX73/0r5CbEYVkvs0sa"
+                            phoneNo
+                            : */}
+          <p
+            className="text-center font-bold text-2xl py-2"
+            style={{ borderBottom: "2px dotted black" }}
+          >
+            Worker Detail
+          </p>
+          <p className="font-semibold mt-2">
+            <span className="font-bold underline">Name :&nbsp;&nbsp;</span>
+            {selectedWorkerDetail?.name}
+          </p>
+          <p className="font-semibold">
+            <span className="font-bold underline">Date Of Birth:</span>
+            &nbsp;&nbsp;
+            {new Date(selectedWorkerDetail?.dateOfBirth).toUTCString()}
+          </p>
+          <p className="font-semibold">
+            <span className="font-bold underline">Phone No. :</span>&nbsp;&nbsp;
+            {selectedWorkerDetail?.phoneNo}
+          </p>
+          <p className="font-semibold mt-2 text-center ">
+            <span className="font-bold underline">Skills :</span>
+          </p>
+          <div className="flex flex-wrap bg-white rounded-md m-2 p-2">
+            {selectedWorkerDetail?.skills &&
+              selectedWorkerDetail.skills.map((skill, index) => {
+                return (
+                  <p
+                    className="bg-blue-100 py-1 px-2 rounded-md m-1 font-semibold"
+                    key={index}
+                  >
+                    {skill}
+                  </p>
+                );
+              })}
           </div>
         </div>
       </div>

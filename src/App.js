@@ -6,7 +6,6 @@ import Recruitment from "./components/Recruitment";
 import ManageRecruitment from "./components/ManageRecruitment";
 import JobDetails from "./components/JobDetailsPopUp";
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -15,12 +14,8 @@ function App() {
         <Route path="/admin-home" element={<AdminHome />}>
           <Route path="" element={<Dashboard />} />
           <Route path="add-job" element={<Recruitment />} />
-          <Route
-            path="manage-recruitment"
-            element={<ManageRecruitment />}
-          >
+          <Route path="manage-recruitment" element={<ManageRecruitment />} />
           <Route path="jobdetails" element={<JobDetails />} />
-          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

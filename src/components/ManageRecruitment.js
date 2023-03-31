@@ -7,7 +7,6 @@ const ManageRecruitment = () => {
     const getData = async() => {
         const data = await axios.get('/get-recruitments');
         setRecruitment(data.data);
-        console.log(data);
     }
     useEffect(() => {
         
