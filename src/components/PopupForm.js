@@ -84,7 +84,10 @@ const PopupForm = ({
       <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
       <div className="bg-white rounded-lg z-20 lg:w-1/3 w-2/3 p-4">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold mb-4 italic">Contact Us</h2>
+          <div className="flex items-center mb-4 gap-2 justify-between">
+            <h2 className="text-2xl font-bold">Edit</h2>
+            <HiPencilAlt />
+          </div>
           <HiX
             className="text-2xl text-slate-800 font-bold hover:text-slate-500"
             onClick={() => setOpen(false)}

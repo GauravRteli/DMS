@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+
 import { HiPencilAlt, HiXCircle } from "react-icons/hi";
+import { FaRegEye } from "react-icons/fa";
 import DeletePopForm from "./DeletePopForm";
 import PopupForm from "./PopupForm";
+import JobDetails from "./JobDetailsPopUp";
 
 const JobCard = ({
   jobname,
@@ -22,6 +25,7 @@ const JobCard = ({
   const recruitmentTime = new Date(createdAt);
   const [open, setOpen] = useState(false);
   const [openDeletePopUp, setOpenDeletePopUp] = useState(false);
+  const [openViewPopUp, setOpenViewPopUp] = useState(false);
   const handleDelete = () => {
     setOpenDeletePopUp(true);
   };
@@ -43,6 +47,13 @@ const JobCard = ({
         <label className="text-grey-700 font-bold">Requirements</label>
         <ul className="list-disc list-inside mb-4 ml-4">{requirements}</ul>
         <div className="flex gap-2 w-full">
+          <button className="bg-green-600 font-bold text-white rounded-md px-4 py-2 hover:bg-white hover:text-green-500 hover:border hover:border-green-500 transition-colors duration-300 ease-in-out"
+                  onClick={() => setOpenViewPopUp(true)}
+          >
+            <div className="flex items-center gap-1 justify-between">
+              <FaRegEye /> View
+            </div>
+          </button>
           <button
             onClick={handleEdit}
             className="bg-blue-500 font-bold text-white rounded-md px-4 py-2 hover:bg-white hover:text-blue-500 hover:border hover:border-blue-500 transition-colors duration-300 ease-in-out"
@@ -61,6 +72,13 @@ const JobCard = ({
           </button>
         </div>
       </div>
+
+      {openViewPopUp && !open && !openDeletePopUp ? (
+        <JobDetails setOpenViewPopUp={setOpenViewPopUp} />
+      ) : (
+        <></>
+      )}
+
       {openDeletePopUp && !open ? (
         <DeletePopForm
           setOpenDeletePopUp={setOpenDeletePopUp}
