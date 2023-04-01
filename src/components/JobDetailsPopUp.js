@@ -19,8 +19,8 @@ const JobDetails = () => {
     getJobData();
   }, []);
   useEffect(() => {
-    console.log(selectedWorkerDetail);
-  }, [selectedWorkerDetail]);
+    console.log(workers);
+  }, [workers]);
 
   return (
     <div className="h-screen">
@@ -95,8 +95,9 @@ const JobDetails = () => {
               return (
                 <WorkerCard
                   key={index}
-                  index={index}
+                  index={worker._id}
                   workers={workers}
+                  setWorkers={setWorkers}
                   setSelectedWorkerDetail={setSelectedWorkerDetail}
                   name={worker.name}
                   phoneNo={worker.phoneNo}
@@ -105,21 +106,6 @@ const JobDetails = () => {
             })}
         </div>
         <div className="bg-slate-50 p-4 col-span-1 h-96 shadow rounded-lg">
-          {/* 
-                                      dateOfBirth
-                            : 
-                            "2003-05-23T20:50:22.230Z"
-                            email
-                            : 
-                            "gauravteli134@gmail.com"
-                            name
-                            : 
-                            "Teli Gaurav Ratanlal "
-                            password
-                            : 
-                            "$2a$10$u47lOFMEsM7Lcdymx6KH4OMPDE8UocetqsQX73/0r5CbEYVkvs0sa"
-                            phoneNo
-                            : */}
           <p
             className="text-center font-bold text-2xl py-2"
             style={{ borderBottom: "2px dotted black" }}
