@@ -6,6 +6,15 @@ import { MdOutlineCancel } from "react-icons/md";
 const WorkerCard = ({ name, index, setSelectedWorkerDetail, workers,setWorkers, phoneNo }) => {
 
 
+  const reject = async (workerId) => {
+    const data = await axios.post("/reject-worker",{
+      job_id: sessionStorage.getItem("job_id"),
+      workerId
+    })
+    console.log(data);
+    setWorkers(data?.data?.new_jobData?.workerregistered);
+  }
+
   const recruit = async (workerId) => {
       const data = await axios.post("/recruit-worker",{
         workerId,
@@ -55,7 +64,7 @@ const WorkerCard = ({ name, index, setSelectedWorkerDetail, workers,setWorkers, 
         </button>
         <button
           className="bg-none font-bold text-red-500 hover:text-red-400 transition-colors duration-300 ease-in-out"
-        //   onClick={}
+          onClick={() => reject(index)}
         >
           <div className="flex items-center gap-1 justify-between">
             <MdOutlineCancel /> Reject
