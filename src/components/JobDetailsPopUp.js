@@ -125,6 +125,10 @@ const JobDetails = () => {
             <span className="font-bold underline">Phone No. :</span>&nbsp;&nbsp;
             {selectedWorkerDetail?.phoneNo}
           </p>
+          <div className="grid grid-cols-9">
+            <p className="col-span-1 font-bold underline">Bio :</p>
+            <p className="col-span-8 font-semibold" >{ selectedWorkerDetail?.bio }</p>
+          </div>
           <p className="font-semibold mt-2 text-center ">
             <span className="font-bold underline">Skills :</span>
           </p>
